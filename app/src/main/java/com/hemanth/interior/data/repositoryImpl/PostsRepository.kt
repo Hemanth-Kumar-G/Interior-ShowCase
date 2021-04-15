@@ -1,12 +1,13 @@
-package dev.shreyaspatil.firebase.coroutines.repository
+package com.hemanth.interior.data.repositoryImpl
 
 import com.google.firebase.firestore.DocumentReference
 import com.google.firebase.firestore.FirebaseFirestore
-import dev.shreyaspatil.firebase.coroutines.Constants
-import dev.shreyaspatil.firebase.coroutines.State
-import dev.shreyaspatil.firebase.coroutines.model.Post
+import com.hemanth.interior.common.Constants
+import com.hemanth.interior.data.model.Category
+import com.hemanth.interior.data.model.Post
+import com.hemanth.interior.data.repository.PostsRepository
+import com.hemanth.interior.util.State
 import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.flow.catch
 import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.flow.flowOn
@@ -16,47 +17,40 @@ import kotlinx.coroutines.tasks.await
  * Repository for the data of posts.
  * This will be a single source of data throughout the application.
  */
-@ExperimentalCoroutinesApi
-class PostsRepository {
+class PostsRepositoryImpl constructor(firestore: FirebaseFirestore) : PostsRepository {
 
-    private val mPostsCollection =
-        FirebaseFirestore.getInstance().collection(Constants.COLLECTION_POST)
+    private val mPostsCollection = firestore.collection(Constants.COLLECTION_POST)
+    private val mCategoryCollection = firestore.collection(Constants.COLLECTION_CATEGORY)
 
-    /**
-     * Returns Flow of [State] which retrieves all posts from cloud firestore collection.
-     */
-    fun getAllPosts() = flow<State<List<Post>>> {
-
-        // Emit loading state
+    override fun getAllPosts() = flow<State<List<Post>>> {
         emit(State.loading())
-
         val snapshot = mPostsCollection.get().await()
         val posts = snapshot.toObjects(Post::class.java)
-
-        // Emit success state with data
         emit(State.success(posts))
-
     }.catch {
-        // If exception is thrown, emit failed state along with message.
         emit(State.failed(it.message.toString()))
     }.flowOn(Dispatchers.IO)
 
-    /**
-     * Adds post [post] into the cloud firestore collection.
-     * @return The Flow of [State] which will store state of current action.
-     */
-    fun addPost(post: Post) = flow<State<DocumentReference>> {
-
-        // Emit loading state
+    override fun addPost(post: Post) = flow<State<DocumentReference>> {
         emit(State.loading())
-
         val postRef = mPostsCollection.add(post).await()
-
-        // Emit success state with post reference
         emit(State.success(postRef))
 
     }.catch {
-        // If exception is thrown, emit failed state along with message.
         emit(State.failed(it.message.toString()))
     }.flowOn(Dispatchers.IO)
+
+    override fun getAllCategory() = flow<State<List<Category>>> {
+        emit(State.loading())
+        val snapshot = mCategoryCollection.get().await()
+        val posts = snapshot.toObjects(Category::class.java)
+        emit(State.success(posts))
+
+    }
+
+    override fun addCategory(category: Category) = flow<State<DocumentReference>> {
+        emit(State.loading())
+        val postRef = mCategoryCollection.add(category).await()
+        emit(State.success(postRef))
+    }
 }

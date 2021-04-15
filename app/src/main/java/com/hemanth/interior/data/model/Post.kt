@@ -1,6 +1,6 @@
-package dev.shreyaspatil.firebase.coroutines.model
+package com.hemanth.interior.data.model
 
 data class Post(
-    val postContent: String? = null,
-    val postAuthor: String? = null
+    val postUrl: String? = null,
+    val postTitle: String? = null
 )

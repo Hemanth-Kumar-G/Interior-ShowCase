@@ -1,4 +1,4 @@
-package dev.shreyaspatil.firebase.coroutines
+package com.hemanth.interior.util
 
 sealed class State<T> {
     class Loading<T> : State<T>()
