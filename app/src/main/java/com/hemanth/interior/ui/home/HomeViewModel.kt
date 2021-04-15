@@ -12,6 +12,8 @@ class HomeViewModel @Inject constructor(private val repository: PostsRepository)
 
     fun getAllPosts() = repository.getAllPosts()
 
+    fun getAllCategories() = repository.getAllCategories()
+
     fun addPost(post: Post) = repository.addPost(post)
 
 }

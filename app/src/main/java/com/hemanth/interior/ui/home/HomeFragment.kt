@@ -31,12 +31,12 @@ class HomeFragment : BaseFragment<HomeFragmentBinding, HomeViewModel>() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        loadPosts()
+        loadCategories()
     }
 
-    private fun loadPosts() {
+    private fun loadCategories() {
         lifecycleScope.launch {
-            homeViewModel.getAllPosts().collect { state ->
+            homeViewModel.getAllCategories().collect { state ->
                 when (state) {
                     is State.Loading -> {
                         showToast("Loading")
@@ -44,7 +44,7 @@ class HomeFragment : BaseFragment<HomeFragmentBinding, HomeViewModel>() {
 
                     is State.Success -> {
                         val postText = state.data.joinToString("\n") {
-                            "${it.postTitle} ~ ${it.postTitle}"
+                            "${it.categoryTitle} ~ ${it.categoryUrl}"
                         }
                         Log.e(TAG, "loadPosts: $postText")
                     }

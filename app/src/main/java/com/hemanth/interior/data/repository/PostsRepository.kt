@@ -25,7 +25,7 @@ interface PostsRepository {
      * Returns Flow of [State] which retrieves all category from cloud firestore collection.
      */
 
-    fun getAllCategory(): Flow<State<List<Category>>>
+    fun getAllCategories(): Flow<State<List<Category>>>
 
     /**
      * Adds category [category] into the cloud firestore collection.

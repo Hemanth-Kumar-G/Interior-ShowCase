@@ -40,7 +40,7 @@ class PostsRepositoryImpl constructor(firestore: FirebaseFirestore) : PostsRepos
         emit(State.failed(it.message.toString()))
     }.flowOn(Dispatchers.IO)
 
-    override fun getAllCategory() = flow<State<List<Category>>> {
+    override fun getAllCategories() = flow<State<List<Category>>> {
         emit(State.loading())
         val snapshot = mCategoryCollection.get().await()
         val posts = snapshot.toObjects(Category::class.java)
