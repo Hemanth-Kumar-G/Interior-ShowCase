@@ -4,22 +4,36 @@ package com.hemanth.interior.ui.home
 import android.os.Bundle
 import android.util.Log
 import android.view.View
+import androidx.appcompat.app.AlertDialog
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
 import com.hemanth.interior.R
 import com.hemanth.interior.BR
 import com.hemanth.interior.base.BaseFragment
+import com.hemanth.interior.data.model.Category
 import com.hemanth.interior.data.model.Post
 import com.hemanth.interior.databinding.HomeFragmentBinding
+import com.hemanth.interior.ui.home.adapter.HomeCategoryAdapter
+import com.hemanth.interior.util.NetworkConnectionUtil
 import com.hemanth.interior.util.State
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.launch
+import javax.inject.Inject
 
 private const val TAG = "HomeFragment"
 
 @AndroidEntryPoint
 class HomeFragment : BaseFragment<HomeFragmentBinding, HomeViewModel>() {
+
+    @Inject
+    lateinit var adapter: HomeCategoryAdapter
+
+    @Inject
+    lateinit var categoryList: ArrayList<Category>
+
+    @Inject
+    lateinit var networkConnectionUtil: NetworkConnectionUtil
 
     private val homeViewModel: HomeViewModel by viewModels()
 
@@ -31,7 +45,18 @@ class HomeFragment : BaseFragment<HomeFragmentBinding, HomeViewModel>() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        loadCategories()
+        init()
+    }
+
+    private fun init() {
+        if (networkConnectionUtil.isConnected()) {
+            loadCategories()
+        } else {
+            networkConnectionUtil.showInternetError({
+                init()
+            }, requireContext())
+        }
+        dataBinding?.rvHomeCategoryList?.adapter = adapter
     }
 
     private fun loadCategories() {
@@ -39,18 +64,22 @@ class HomeFragment : BaseFragment<HomeFragmentBinding, HomeViewModel>() {
             homeViewModel.getAllCategories().collect { state ->
                 when (state) {
                     is State.Loading -> {
-                        showToast("Loading")
+                        homeViewModel.loading.set(true)
                     }
 
                     is State.Success -> {
-                        val postText = state.data.joinToString("\n") {
-                            "${it.categoryTitle} ~ ${it.categoryUrl}"
-                        }
-                        Log.e(TAG, "loadPosts: $postText")
+                        homeViewModel.loading.set(false)
+                        categoryList.clear()
+                        categoryList.addAll(state.data)
+                        adapter.notifyDataSetChanged()
                     }
 
-                    is State.Failed -> showToast("Failed! ${state.message}")
+                    is State.Failed -> {
+                        showToast("Failed! ${state.message}")
+                        homeViewModel.loading.set(false)
+                    }
                 }
+
             }
         }
     }
@@ -72,5 +101,8 @@ class HomeFragment : BaseFragment<HomeFragmentBinding, HomeViewModel>() {
             }
         }
     }
+
+
+
 
 }

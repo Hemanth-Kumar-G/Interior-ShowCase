@@ -13,7 +13,7 @@ import com.google.android.material.snackbar.Snackbar
 
 abstract class BaseFragment<T : ViewDataBinding, V : BaseViewModel<*>> : Fragment() {
 
-    private var viewDataBinding: T? = null
+    var dataBinding: T? = null
 
     private var mFragmentView: View? = null
 
@@ -44,8 +44,8 @@ abstract class BaseFragment<T : ViewDataBinding, V : BaseViewModel<*>> : Fragmen
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        viewDataBinding = DataBindingUtil.inflate(inflater, getLayoutId(), container, false)
-        mFragmentView = viewDataBinding?.root
+        dataBinding = DataBindingUtil.inflate(inflater, getLayoutId(), container, false)
+        mFragmentView = dataBinding?.root
         return mFragmentView
     }
 
@@ -60,7 +60,7 @@ abstract class BaseFragment<T : ViewDataBinding, V : BaseViewModel<*>> : Fragmen
      */
     private fun performDataBinding() {
         getViewModel().let {
-            viewDataBinding?.apply {
+            dataBinding?.apply {
                 setVariable(getBindingVariable(), it)
                 lifecycleOwner = this@BaseFragment
                 executePendingBindings()
@@ -96,7 +96,12 @@ abstract class BaseFragment<T : ViewDataBinding, V : BaseViewModel<*>> : Fragmen
         }
     }
 
-    fun showSnackbar(message: String, duration: Int = Snackbar.LENGTH_SHORT, action: String? = null, listener: View.OnClickListener? = null) {
+    fun showSnackbar(
+        message: String,
+        duration: Int = Snackbar.LENGTH_SHORT,
+        action: String? = null,
+        listener: View.OnClickListener? = null
+    ) {
         view?.let {
             snackbar = Snackbar.make(it, message, duration)
 

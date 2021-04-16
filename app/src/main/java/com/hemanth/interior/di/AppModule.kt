@@ -5,6 +5,7 @@ import com.google.firebase.FirebaseApp
 import com.google.firebase.firestore.FirebaseFirestore
 import com.hemanth.interior.data.repository.PostsRepository
 import com.hemanth.interior.data.repositoryImpl.PostsRepositoryImpl
+import com.hemanth.interior.util.NetworkConnectionUtil
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -28,4 +29,9 @@ class AppModule {
     @Provides
     fun providePostsRepository(firestore: FirebaseFirestore): PostsRepository =
         PostsRepositoryImpl(firestore)
+
+    @Singleton
+    @Provides
+    fun provideNetworkConnectionUtil(@ApplicationContext context: Context) =
+        NetworkConnectionUtil(context)
 }

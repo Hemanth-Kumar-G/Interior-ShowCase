@@ -1,5 +1,6 @@
 package com.hemanth.interior.ui.home
 
+import androidx.databinding.ObservableBoolean
 import com.hemanth.interior.base.BaseViewModel
 import com.hemanth.interior.data.model.Post
 import com.hemanth.interior.data.repository.PostsRepository
@@ -9,6 +10,8 @@ import javax.inject.Inject
 @HiltViewModel
 class HomeViewModel @Inject constructor(private val repository: PostsRepository) :
     BaseViewModel<Any>() {
+
+    val loading = ObservableBoolean(true)
 
     fun getAllPosts() = repository.getAllPosts()
 
