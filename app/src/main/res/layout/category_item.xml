@@ -13,7 +13,10 @@
     <androidx.cardview.widget.CardView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_margin="@dimen/tenDp"
+        android:layout_marginTop="@dimen/fiveDp"
+        android:layout_marginStart="@dimen/twentyDp"
+        android:layout_marginEnd="@dimen/twentyDp"
+        android:layout_marginBottom="@dimen/fiveDp"
         app:cardCornerRadius="@dimen/tenDp">
 
         <androidx.constraintlayout.widget.ConstraintLayout
@@ -26,7 +29,7 @@
                 android:layout_height="@dimen/zeroDp"
                 android:imageUri="@{category.categoryUrl}"
                 app:actualImageScaleType="fitXY"
-                app:layout_constraintDimensionRatio="1:1"
+                app:layout_constraintDimensionRatio="1:.5"
                 app:layout_constraintTop_toTopOf="parent"
                 app:placeholderImage="@drawable/place_holder"
                 app:placeholderImageScaleType="fitXY" />
