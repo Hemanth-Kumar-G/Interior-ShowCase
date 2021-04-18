@@ -4,14 +4,14 @@ package com.hemanth.interior.ui.home
 import android.os.Bundle
 import android.util.Log
 import android.view.View
-import androidx.appcompat.app.AlertDialog
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
+import androidx.navigation.fragment.findNavController
 import com.hemanth.interior.R
 import com.hemanth.interior.BR
 import com.hemanth.interior.base.BaseFragment
+import com.hemanth.interior.common.Constants.CATEGORY
 import com.hemanth.interior.data.model.Category
-import com.hemanth.interior.data.model.Post
 import com.hemanth.interior.databinding.HomeFragmentBinding
 import com.hemanth.interior.ui.home.adapter.HomeCategoryAdapter
 import com.hemanth.interior.util.NetworkConnectionUtil
@@ -20,8 +20,6 @@ import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.launch
 import javax.inject.Inject
-
-private const val TAG = "HomeFragment"
 
 @AndroidEntryPoint
 class HomeFragment : BaseFragment<HomeFragmentBinding, HomeViewModel>() {
@@ -46,17 +44,24 @@ class HomeFragment : BaseFragment<HomeFragmentBinding, HomeViewModel>() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         init()
+        adapterListener()
+    }
+
+    private fun adapterListener() {
+        adapter.onItemSelectedListener = { category ->
+            val bundle = Bundle().apply { putParcelable(CATEGORY, category) }
+            findNavController().navigate(R.id.home_action, bundle)
+        }
     }
 
     private fun init() {
         if (networkConnectionUtil.isConnected()) {
             loadCategories()
         } else {
-            networkConnectionUtil.showInternetError({
-                init()
-            }, requireContext())
+            networkConnectionUtil.showInternetError({ init() }, requireContext())
         }
         dataBinding?.rvHomeCategoryList?.adapter = adapter
+
     }
 
     private fun loadCategories() {
@@ -83,26 +88,5 @@ class HomeFragment : BaseFragment<HomeFragmentBinding, HomeViewModel>() {
             }
         }
     }
-
-    private suspend fun addPost(post: Post) {
-        homeViewModel.addPost(post).collect { state ->
-            when (state) {
-                is State.Loading -> {
-                    showToast("Loading")
-                }
-
-                is State.Success -> {
-                    showToast("Posted")
-                }
-
-                is State.Failed -> {
-                    showToast("Failed! ${state.message}")
-                }
-            }
-        }
-    }
-
-
-
 
 }

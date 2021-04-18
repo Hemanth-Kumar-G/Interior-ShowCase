@@ -19,3 +19,16 @@
 # If you keep the line number information, uncomment this to
 # hide the original source file name.
 #-renamesourcefileattribute SourceFile
+# Basic ProGuard rules for Firebase Android SDK 2.0.0+
+-keep class com.firebase.* { *; }
+-keep class org.apache.* { *; }
+-keepnames class com.fasterxml.jackson.* { *; }
+-keepnames class javax.servlet.* { *; }
+-keepnames class org.ietf.jgss.* { *; }
+-dontwarn org.apache.**
+-dontwarn org.w3c.dom.**
+
+
+# Keep custom model classes
+-keep class com.google.firebase.example.fireeats.java.model.*{ *; }
+-keep class com.google.firebase.example.fireeats.kotlin.model.* { *; }

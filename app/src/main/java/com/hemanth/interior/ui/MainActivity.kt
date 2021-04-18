@@ -29,7 +29,8 @@ class MainActivity : BaseActivity<ActivityMainBinding, MainViewModel>() {
     }
 
     private fun init() {
-        navController = (supportFragmentManager.findFragmentById(R.id.navHostMain) as NavHostFragment).navController
+        navController =
+            (supportFragmentManager.findFragmentById(R.id.navHostMain) as NavHostFragment).navController
     }
 
 }

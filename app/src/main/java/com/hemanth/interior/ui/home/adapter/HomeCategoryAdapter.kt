@@ -8,22 +8,22 @@ import com.hemanth.interior.databinding.CategoryItemBinding
 
 
 class HomeCategoryAdapter(private val categoryList: ArrayList<Category>) :
-    RecyclerView.Adapter<HomeCategoryAdapter.HomeNewsListViewHolder>() {
+    RecyclerView.Adapter<HomeCategoryAdapter.HomeCategoryViewHolder>() {
 
     var onItemSelectedListener: ((category: Category) -> Unit)? = null
 
-    class HomeNewsListViewHolder(val binding: CategoryItemBinding) :
+    class HomeCategoryViewHolder(val binding: CategoryItemBinding) :
         RecyclerView.ViewHolder(binding.root)
 
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): HomeNewsListViewHolder {
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): HomeCategoryViewHolder {
         val binding =
             CategoryItemBinding.inflate(LayoutInflater.from(parent.context), parent, false)
-        return HomeNewsListViewHolder(binding)
+        return HomeCategoryViewHolder(binding)
     }
 
     override fun getItemCount(): Int = categoryList.size
 
-    override fun onBindViewHolder(holder: HomeNewsListViewHolder, position: Int) {
+    override fun onBindViewHolder(holder: HomeCategoryViewHolder, position: Int) {
         holder.binding.category = categoryList[position]
 
         holder.binding.root.setOnClickListener {
