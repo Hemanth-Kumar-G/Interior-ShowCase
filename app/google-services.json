@@ -1,33 +1,33 @@
 {
   "project_info": {
-    "project_number": "583256587319",
-    "project_id": "interior-d3958",
-    "storage_bucket": "interior-d3958.appspot.com"
+    "project_number": "271767312447",
+    "project_id": "interior-ceaf1",
+    "storage_bucket": "interior-ceaf1.appspot.com"
   },
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:583256587319:android:f45f57b35ba49447d493b2",
+        "mobilesdk_app_id": "1:271767312447:android:42799ea499b8f2b2a3008a",
         "android_client_info": {
           "package_name": "com.hemanth.interior"
         }
       },
       "oauth_client": [
         {
-          "client_id": "583256587319-boeud28u9p4f4vqcrsrj39nsemndlr0a.apps.googleusercontent.com",
+          "client_id": "271767312447-bbevpu0b8stk28ff6q7cm1lpao0ael3m.apps.googleusercontent.com",
           "client_type": 3
         }
       ],
       "api_key": [
         {
-          "current_key": "AIzaSyAU9smtrG4AT15F0jdFqIhuVlTA81y2FB0"
+          "current_key": "AIzaSyB-S_w3sIrOnAtClZp6CJC78uYSlyn59Y8"
         }
       ],
       "services": {
         "appinvite_service": {
           "other_platform_oauth_client": [
             {
-              "client_id": "583256587319-boeud28u9p4f4vqcrsrj39nsemndlr0a.apps.googleusercontent.com",
+              "client_id": "271767312447-bbevpu0b8stk28ff6q7cm1lpao0ael3m.apps.googleusercontent.com",
               "client_type": 3
             }
           ]
