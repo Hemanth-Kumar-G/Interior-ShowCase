@@ -2,9 +2,11 @@ package com.hemanth.interior.ui.post
 
 import android.os.Bundle
 import android.view.View
+import androidx.core.os.bundleOf
 import androidx.fragment.app.viewModels
-import com.hemanth.interior.R
+import androidx.navigation.fragment.findNavController
 import com.hemanth.interior.BR
+import com.hemanth.interior.R
 import com.hemanth.interior.base.BaseFragment
 import com.hemanth.interior.common.Constants
 import com.hemanth.interior.data.model.Category
@@ -43,7 +45,14 @@ class PostFragment : BaseFragment<PostFragmentBinding, PostViewModel>() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         init()
+        adapterListener()
+    }
 
+    private fun adapterListener() {
+        postAdapter.onItemSelectedListener = { post: String ->
+            val bundle = bundleOf("POST" to post)
+            findNavController().navigate(R.id.post_action, bundle)
+        }
     }
 
     private fun init() {

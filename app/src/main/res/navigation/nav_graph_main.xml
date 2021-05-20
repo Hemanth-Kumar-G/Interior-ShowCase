@@ -30,9 +30,19 @@
             app:destination="@id/postFragment" />
 
     </fragment>
+
     <fragment
         android:id="@+id/postFragment"
         android:name="com.hemanth.interior.ui.post.PostFragment"
-        android:label="PostFragment" />
+        android:label="PostFragment">
+        <action
+            android:id="@+id/post_action"
+            app:destination="@id/previewFragment" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/previewFragment"
+        android:name="com.hemanth.interior.ui.preview.PreviewFragment"
+        android:label="PreviewFragment" />
 
 </navigation>
