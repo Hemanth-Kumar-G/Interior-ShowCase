@@ -19,14 +19,15 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
-        <com.facebook.drawee.view.SimpleDraweeView
+        <com.hemanth.interior.util.ZoomableDraweeView
             android:id="@+id/imageDraweeView"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-
+            android:layout_height="@dimen/zeroDp"
             app:actualImageScaleType="fitCenter"
             app:progressBarAutoRotateInterval="1000"
-            app:progressBarImageScaleType="centerInside" />
+            app:progressBarImageScaleType="centerInside"
+            app:layout_constraintTop_toBottomOf="@id/ivPostBack"
+            app:layout_constraintBottom_toBottomOf="parent"/>
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>
